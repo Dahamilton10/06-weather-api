@@ -31,6 +31,11 @@ $("#search-button").click(function () {
         url: `https://api.openweathermap.org/data/2.5/weather?q=${cityQuery},us&appid=064e9a1e286f6e51c5c7c7dd2f6fc716&units=imperial`,
         success: function (response) {
             console.log(response);
+            var newCard = $("<li>");
+            newCard.data("city", cityQuery);
+            newCard.text([cityQuery]);
+            newCard.addClass("list-group-item");
+            $("#search-list").append(newCard);
             lat = response.coord.lat;
             lon = response.coord.lon;
             console.log(lat, lon);
