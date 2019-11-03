@@ -15,7 +15,7 @@ $.ajax({
         // Creating the 5 day weather forecast
 
         var card = $("<div class='card'>")
-        card.attr("class", "inline");
+        card.attr("class", "inline card");
 
         for (var x = 0; x < 4; x++) {
             var i = x * 8 + 5;
@@ -40,6 +40,7 @@ $.ajax({
 
 $("#search-button").click(function () {
     cityQuery = $(".inputQuery").val();
+    $(".card").remove();
     $.ajax({
         type: "GET",
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityQuery},us&appid=064e9a1e286f6e51c5c7c7dd2f6fc716&units=imperial&cnt=37`,
@@ -67,7 +68,7 @@ $("#search-button").click(function () {
             // Creating the 5 day weather forecast
 
             var card = $("<div class='card'>")
-            card.attr("class", "inline");
+            card.attr("class", "inline card");
 
             for (var x = 0; x < 4; x++) {
                 var i = x * 8 + 5;
@@ -95,6 +96,7 @@ $(document).on("click", "#history", function () {
     console.log(this);
     cityQuery = $(this).data("city");
     console.log(cityQuery);
+    $(".card").remove();
     $.ajax({
         type: "GET",
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityQuery},us&appid=064e9a1e286f6e51c5c7c7dd2f6fc716&units=imperial&cnt=37`,
@@ -116,7 +118,7 @@ $(document).on("click", "#history", function () {
             // Creating the 5 day weather forecast
 
             var card = $("<div class='card'>")
-            card.attr("class", "inline");
+            card.attr("class", "inline card");
 
             for (var x = 0; x < 4; x++) {
                 var i = x * 8 + 5;
