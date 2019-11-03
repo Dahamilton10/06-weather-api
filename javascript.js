@@ -1,3 +1,22 @@
+var priorSearches = [];
+console.log(priorSearches);
+if (localStorage.priorSearches) {
+    // I was having some issues with local storage so I had to go back and dig through the internet to get this to work
+    // I had this and the stringify on multiple lines and I think that had something to do with h=why it wasnt working before
+    // source          https://stackoverflow.com/questions/3357553/how-do-i-store-an-array-in-localstorage
+    // I already understood what each part does and why you need to do it, I was just stuck on syntax
+    priorSearches = JSON.parse(localStorage.getItem("priorSearches"));
+    console.log(priorSearches);
+    for (var i = 0; i < priorSearches.length; i++) {
+        var newCard = $("<li>");
+        newCard.attr("data-city", priorSearches[i]);
+        newCard.text([priorSearches[i]]);
+        newCard.addClass("list-group-item");
+        newCard.attr("id", "history");
+        $("#search-list").append(newCard);
+    }
+};
+
 $.ajax({
     type: "GET",
     url: "https://api.openweathermap.org/data/2.5/forecast?q=Hooksett,us&appid=064e9a1e286f6e51c5c7c7dd2f6fc716&units=imperial&cnt=37",
@@ -46,6 +65,11 @@ $("#search-button").click(function () {
         url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityQuery},us&appid=064e9a1e286f6e51c5c7c7dd2f6fc716&units=imperial&cnt=37`,
         success: function (response) {
             console.log(response);
+            // Setting local storage
+            console.log(priorSearches);
+            priorSearches.push(cityQuery);
+            console.log(priorSearches);
+            localStorage.setItem("priorSearches", JSON.stringify(priorSearches));
             // creating the input into an li in the history
             var newCard = $("<li>");
             newCard.attr("data-city", cityQuery);
@@ -117,7 +141,7 @@ $(document).on("click", "#history", function () {
             $("#current-wind-speed").text("Wind speed: " + [wind] + " MPH");
             // Creating the 5 day weather forecast
 
-            var card = $("<div class='card'>")
+            var card = $("<div class='card'>");
             card.attr("class", "inline card");
 
             for (var x = 0; x < 4; x++) {
